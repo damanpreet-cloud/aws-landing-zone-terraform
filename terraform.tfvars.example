@@ -1,0 +1,13 @@
+home_region     = "ca-central-1"
+allowed_regions = ["ca-central-1", "us-east-1"]
+
+# Each account needs a unique email address.
+member_accounts = {
+  security    = { email = "aws+security@example.com", ou = "security" }
+  log-archive = { email = "aws+logs@example.com", ou = "security" }
+  network     = { email = "aws+network@example.com", ou = "infrastructure" }
+  shared-svcs = { email = "aws+shared@example.com", ou = "infrastructure" }
+  app-prod    = { email = "aws+prod@example.com", ou = "prod" }
+  app-dev     = { email = "aws+dev@example.com", ou = "nonprod" }
+  sandbox     = { email = "aws+sandbox@example.com", ou = "sandbox" }
+}

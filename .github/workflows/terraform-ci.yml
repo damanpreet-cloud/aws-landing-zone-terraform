@@ -1,0 +1,41 @@
+name: terraform-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Format check
+        run: terraform fmt -check -recursive
+
+      - name: Init (no backend)
+        run: terraform init -backend=false
+
+      - name: Validate
+        run: terraform validate
+
+      - uses: terraform-linters/setup-tflint@v4
+
+      - name: TFLint
+        run: |
+          tflint --init
+          tflint
+
+      - name: Trivy config scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: config
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          exit-code: "1"

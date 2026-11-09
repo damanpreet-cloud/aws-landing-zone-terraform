@@ -1,0 +1,10 @@
+# Copy to backend.tf and fill in. Create the bucket and lock table first.
+terraform {
+  backend "s3" {
+    bucket         = "REPLACE-tfstate-bucket"
+    key            = "landing-zone/terraform.tfstate"
+    region         = "ca-central-1"
+    encrypt        = true
+    dynamodb_table = "REPLACE-tfstate-lock"
+  }
+}
